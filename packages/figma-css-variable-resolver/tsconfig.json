@@ -1,0 +1,10 @@
+{
+  "ignore": ["./vite.config.ts"],
+  "compilerOptions": {
+    "strict": true,
+    "target": "ES2019",
+    "typeRoots": ["./node_modules/@types", "./node_modules/@figma"],
+    "moduleResolution": "node",
+    "isolatedModules": true
+  }
+}

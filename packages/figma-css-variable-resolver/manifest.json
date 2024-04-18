@@ -1,0 +1,11 @@
+{
+  "name": "CSS variable resolver",
+  "id": "1361679406829569523",
+  "api": "1.0.0",
+  "editorType": ["dev"],
+  "capabilities": ["codegen"],
+  "main": "dist/index.js",
+  "permissions": [],
+  "codegenLanguages": [{ "label": "Text", "value": "text" }],
+  "documentAccess": "dynamic-page"
+}

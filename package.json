@@ -1,0 +1,17 @@
+{
+  "name": "design-system-figma-plugins",
+  "version": "1.0.0",
+  "description": "",
+  "license": "MIT",
+  "author": {
+    "name": "EDS Core Team",
+    "email": "fg_eds@equinor.com"
+  },
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present"
+  },
+  "workspaces": [
+    "packages/figma-css-variable-resolver"
+  ]
+}
