@@ -7,5 +7,6 @@
   "main": "dist/index.js",
   "permissions": [],
   "codegenLanguages": [{ "label": "Text", "value": "text" }],
-  "documentAccess": "dynamic-page"
+  "documentAccess": "dynamic-page",
+  "networkAccess": { "allowedDomains": ["none"] }
 }
