@@ -1,4 +1,4 @@
-export type KeyValue = {
-  key: string;
-  value: string;
+export type VariableCollectionWithMode = {
+  variableCollectionName: string;
+  mode: string;
 };

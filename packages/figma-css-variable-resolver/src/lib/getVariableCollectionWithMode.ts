@@ -1,6 +1,9 @@
-import { removeEmojis } from "./removeEmojis";
+import { prettify } from "./prettify";
+import { VariableCollectionWithMode } from "./types";
 
-export async function getVariableCollectionWithMode(event: CodegenEvent) {
+export async function getVariableCollectionWithMode(
+  event: CodegenEvent,
+): Promise<VariableCollectionWithMode[]> {
   return await Promise.all(
     Object.keys(event.node?.resolvedVariableModes)?.map(async (key) => {
       const variableCollection =
@@ -16,13 +19,9 @@ export async function getVariableCollectionWithMode(event: CodegenEvent) {
 
       const mode = currentMode ?? defaultMode;
 
-      const nameTrimmed = variableCollection?.name?.trim() ?? "no-name";
-      const name = removeEmojis(nameTrimmed).toLowerCase();
-      const value = removeEmojis(mode?.name ?? "no-mode").toLowerCase();
-
       return {
-        key: name.replace(" ", "-"),
-        value,
+        mode: prettify(mode?.name),
+        variableCollectionName: prettify(variableCollection?.name),
       };
     }),
   );
