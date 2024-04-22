@@ -1,4 +1,4 @@
-import { getVariableCollectionWithMode } from "./lib/getVariableCollectionWithMode";
+import { getVariableCollectionModes } from "./lib/getVariableCollectionModes";
 import { applyTemplateReplacements } from "./lib/applyTemplateReplacements";
 
 if (figma.mode === "codegen") {
@@ -9,12 +9,15 @@ if (figma.mode === "codegen") {
     if (fill || stroke) {
       let background = "";
       let border = "";
-      const variableModes = await getVariableCollectionWithMode(event);
+      const variableCollectionModes = await getVariableCollectionModes(event);
 
       if (fill) {
         const variable = await figma.variables.getVariableByIdAsync(fill.id);
         const codeSyntax = variable?.codeSyntax.WEB ?? "";
-        const code = applyTemplateReplacements(codeSyntax, variableModes);
+        const code = applyTemplateReplacements(
+          codeSyntax,
+          variableCollectionModes,
+        );
 
         const node = await figma.getNodeByIdAsync(event.node?.id);
         const isTextNode = node?.type === "TEXT";
@@ -25,7 +28,10 @@ if (figma.mode === "codegen") {
       if (stroke) {
         const variable = await figma.variables.getVariableByIdAsync(stroke.id);
         const codeSyntax = variable?.codeSyntax.WEB ?? "";
-        const code = applyTemplateReplacements(codeSyntax, variableModes);
+        const code = applyTemplateReplacements(
+          codeSyntax,
+          variableCollectionModes,
+        );
         border = `border-color: ${code};`;
       }
 

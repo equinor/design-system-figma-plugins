@@ -1,9 +1,9 @@
 import { prettify } from "./prettify";
-import { VariableCollectionWithMode } from "./types";
+import { VariableCollectionMode } from "./types";
 
-export async function getVariableCollectionWithMode(
+export async function getVariableCollectionModes(
   event: CodegenEvent,
-): Promise<VariableCollectionWithMode[]> {
+): Promise<VariableCollectionMode[]> {
   return await Promise.all(
     Object.keys(event.node?.resolvedVariableModes)?.map(async (key) => {
       const variableCollection =
@@ -19,10 +19,12 @@ export async function getVariableCollectionWithMode(
 
       const mode = currentMode ?? defaultMode;
 
-      return {
+      const currentCollectionMode = {
+        collectionName: prettify(variableCollection?.name),
         mode: prettify(mode?.name),
-        variableCollectionName: prettify(variableCollection?.name),
       };
+
+      return currentCollectionMode;
     }),
   );
 }

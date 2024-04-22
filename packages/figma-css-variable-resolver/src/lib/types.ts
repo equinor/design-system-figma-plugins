@@ -1,4 +1,4 @@
-export type VariableCollectionWithMode = {
-  variableCollectionName: string;
+export type VariableCollectionMode = {
+  collectionName: string;
   mode: string;
 };
