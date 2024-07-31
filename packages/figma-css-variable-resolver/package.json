@@ -9,7 +9,8 @@
     "dev": "npm run build -- --watch",
     "lint": "eslint --ext .ts,.tsx --ignore-pattern node_modules .",
     "lint:fix": "eslint --ext .ts,.tsx --ignore-pattern node_modules --fix .",
-    "prettier": "prettier --write ./src"
+    "prettier": "prettier --write ./src",
+    "test": "vitest"
   },
   "license": "MIT",
   "author": {
@@ -25,6 +26,7 @@
     "eslint-config-prettier": "^9.1.0",
     "prettier": "^3.2.5",
     "typescript": "^5.3.2",
-    "vite": "^5.2.9"
+    "vite": "^5.2.9",
+    "vitest": "^2.0.4"
   }
 }

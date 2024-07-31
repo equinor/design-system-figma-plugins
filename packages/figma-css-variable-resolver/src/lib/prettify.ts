@@ -11,7 +11,8 @@ export const prettify = (value?: string) => {
   const trimmed = value.trim();
   const withoutEmojis = removeEmojis(trimmed);
   const lowercased = withoutEmojis.toLowerCase();
-  const hyphenated = lowercased.replace(" ", "-");
+  // Replace empty spaces with hyphens unless they are already connected by a hyphen
+  const hyphenated = lowercased.replace(/ /g, "-").replace(/-+/g, "-");
 
   return hyphenated;
 };
