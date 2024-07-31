@@ -22,7 +22,7 @@ if (figma.mode === "codegen") {
         const node = await figma.getNodeByIdAsync(event.node?.id);
         const isTextNode = node?.type === "TEXT";
         const property = isTextNode ? "color" : "background-color";
-        background = `${property}: ${code};`;
+        background = `${property}: var(${code});`;
       }
 
       if (stroke) {
@@ -32,7 +32,7 @@ if (figma.mode === "codegen") {
           codeSyntax,
           variableCollectionModes,
         );
-        border = `border-color: ${code};`;
+        border = `border-color: var(${code});`;
       }
 
       let snippet;
