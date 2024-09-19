@@ -1,62 +1,42 @@
-import { getVariableCollectionModes } from "./lib/getVariableCollectionModes";
-import { applyTemplateReplacements } from "./lib/applyTemplateReplacements";
+import { getVariableCollectionModes } from './lib/getVariableCollectionModes'
+import { applyTemplateReplacements } from './lib/applyTemplateReplacements'
 
-if (figma.mode === "codegen") {
-  figma.codegen.on("generate", async (event: CodegenEvent) => {
-    const fill = event.node?.boundVariables?.fills?.[0];
-    const stroke = event.node?.boundVariables?.strokes?.[0];
+if (figma.mode === 'codegen') {
+  figma.codegen.on('generate', async (event: CodegenEvent) => {
+    const variables = event.node?.boundVariables
 
-    if (fill || stroke) {
-      let background = "";
-      let border = "";
-      const variableCollectionModes = await getVariableCollectionModes(event);
+    if (variables) {
+      let snippet = 'No variables found'
 
-      if (fill) {
-        const variable = await figma.variables.getVariableByIdAsync(fill.id);
-        const codeSyntax = variable?.codeSyntax.WEB ?? "";
-        const code = applyTemplateReplacements(
-          codeSyntax,
-          variableCollectionModes,
-        );
+      const declarations = Object.keys(variables).map(async (key) => {
+        const variable = variables[key]?.[0] ?? variables[key]
+        const variableId = variable.id
+        const variableData = await figma.variables.getVariableByIdAsync(variableId)
+        const codeSyntax = variableData?.codeSyntax.WEB ?? ''
+        const variableCollectionModes = await getVariableCollectionModes(event)
+        const code = applyTemplateReplacements(codeSyntax, variableCollectionModes)
+        return `${key}: var(${code});\n`
+      })
 
-        const node = await figma.getNodeByIdAsync(event.node?.id);
-        const isTextNode = node?.type === "TEXT";
-        const property = isTextNode ? "color" : "background-color";
-        background = `${property}: var(${code});`;
-      }
-
-      if (stroke) {
-        const variable = await figma.variables.getVariableByIdAsync(stroke.id);
-        const codeSyntax = variable?.codeSyntax.WEB ?? "";
-        const code = applyTemplateReplacements(
-          codeSyntax,
-          variableCollectionModes,
-        );
-        border = `border-color: var(${code});`;
-      }
-
-      let snippet;
-      if (background && border) {
-        snippet = `${background}\n${border}`;
-      } else {
-        snippet = background || border;
-      }
+      await Promise.all(declarations).then((values) => {
+        snippet = values.join('')
+      })
 
       return [
         {
-          title: "CSS variable resolver",
+          title: 'CSS variable resolver',
           code: snippet,
-          language: "CSS",
+          language: 'CSS',
         },
-      ];
+      ]
     }
 
     return [
       {
-        title: "CSS variable resolver",
-        code: "no fill found",
-        language: "CSS",
+        title: 'CSS variable resolver',
+        code: 'No variables found',
+        language: 'CSS',
       },
-    ];
-  });
+    ]
+  })
 }
