@@ -9,6 +9,7 @@
   },
   "scripts": {
     "build": "npm run build --workspaces --if-present",
+    "dev": "npm run dev --workspace figma-css-variable-resolver",
     "lint": "npm run lint --workspaces --if-present",
     "prettier": "npm run prettier --workspaces --if-present"
   },
