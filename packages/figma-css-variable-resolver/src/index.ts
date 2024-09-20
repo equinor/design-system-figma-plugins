@@ -8,7 +8,6 @@ if (figma.mode === 'codegen') {
 
     if (variables) {
       const isTextNode = event.node?.type === 'TEXT'
-      console.log('isTextNode', isTextNode)
 
       let snippet = ''
 
@@ -24,8 +23,6 @@ if (figma.mode === 'codegen') {
             ? replacePropNameWithCSS('color')
             : replacePropNameWithCSS('background-color')
           : replacePropNameWithCSS(key))
-
-        console.log('CSSProp', CSSProp)
 
         return `${CSSProp}: var(${code});\n`
       })
