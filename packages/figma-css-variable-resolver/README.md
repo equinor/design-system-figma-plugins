@@ -6,5 +6,5 @@ If you add codeSyntax to your variable and add ${variableModeAlias} as part of t
 
 Example:
 
-- Code syntax: `var(--color-surface-action-${prominence})`
+- Code syntax: `--color-surface-action-${prominence}`
 - Output when variable mode is set to primary: `var(--color-surface-action-primary)`
